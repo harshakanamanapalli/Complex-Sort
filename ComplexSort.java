@@ -2,17 +2,26 @@ import java.util.*;
 
 public class ComplexSort {
     public static void sort(List<Integer> arr) {
-        if (arr.size() == 7) {
-            selectionSort(arr);
+        sort(arr, 0, arr.size() - 1);
+    }
+
+    private static void sort(List<Integer> arr, int start, int end) {
+        System.out.println("Complex sort ....");
+        if (end - start + 1 >= 10000) {
+            System.out.println("Quick sort for (" + start + " : " + end + ")");
+            quickSort(arr, start, end);
+        } 
+        else if (end - start + 1 >= 100) {
+            System.out.println("Merge sort for (" + start + " : " + end + ")");
+            mergeSort(arr, start, end);
         }
-        else if (arr.size() == 10) {
-            quickSort(arr);
-        } else {
-            mergeSort(arr);
+        else {
+            System.out.println("Selection sort for (" + start + " : " + end + ")");
+            selectionSort(arr, start, end);
         }
     }
 
-    private static void selectionSort(List<Integer> arr) {
+    public static void selectionSort(List<Integer> arr) {
         System.out.println("Selection sort....");
         selectionSort(arr, 0, arr.size() - 1);
     }
@@ -30,7 +39,7 @@ public class ComplexSort {
         }
     }
 
-    private static void quickSort(List<Integer> arr) {
+    public static void quickSort(List<Integer> arr) {
         System.out.println("Quick sort....");
         quickSort(arr, 0, arr.size() - 1);
     }
@@ -41,8 +50,8 @@ public class ComplexSort {
         }
 
         int k = quickSelect(arr, start, end);
-        quickSort(arr, start, k - 1);
-        quickSort(arr, k + 1, end);
+        sort(arr, start, k - 1);
+        sort(arr, k + 1, end);
     }
 
     private static int quickSelect(List<Integer> arr, int start, int end) {
@@ -59,7 +68,7 @@ public class ComplexSort {
         return index;
     }
 
-    private static void mergeSort(List<Integer> arr) {
+    public static void mergeSort(List<Integer> arr) {
         System.out.println("Merge sort...");
         mergeSort(arr, 0, arr.size() - 1);
     }
@@ -70,8 +79,8 @@ public class ComplexSort {
         }
 
         int mid = start + (end - start) / 2;
-        mergeSort(arr, start, mid);
-        mergeSort(arr, mid + 1, end);
+        sort(arr, start, mid);
+        sort(arr, mid + 1, end);
         mergeSortedArrays(arr, start, mid, end);
     }
 
